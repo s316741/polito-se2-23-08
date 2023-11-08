@@ -1,12 +1,15 @@
-import mongoose from "mongoose"
+const { Pool } = require('pg')
 import dotenv from "dotenv"
 
 dotenv.config()
-const conn = mongoose.connect(process.env.MONGO_URI).then((db) => {
-    console.log('DB Connected')
-    return db
-}).catch((err) => {
-    console.log(err)
+const pool = new Pool ({
+    host: process.env.DB_HOST, 
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASS,
+
 })
 
-export default conn;
+
+export default pool;
