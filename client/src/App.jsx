@@ -1,14 +1,19 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import Student from './components/Student';
+import Professor from './components/Professor';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 
 function App() {
   
   return (
-    <>
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path={'/'} element={<></>}></Route>
+        <Route path={'/student'} element={<Student></Student>}></Route>
+        <Route path={'/professor'} element={<Professor></Professor>}></Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
