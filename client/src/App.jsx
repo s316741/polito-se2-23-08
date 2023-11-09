@@ -1,8 +1,6 @@
-import { useState } from 'react';
-import './App.css';
-import Student from './components/Student';
-import Professor from './components/Professor';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import React from 'react';
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   
@@ -10,6 +8,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path={'/'} element={<></>}></Route>
+        <Route path={'/portal'}></Route>
       </Routes>
     </BrowserRouter>
   )
