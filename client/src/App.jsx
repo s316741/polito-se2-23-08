@@ -10,8 +10,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path={'/'} element={<></>}></Route>
-        <Route path={'/student'} element={<Student></Student>}></Route>
-        <Route path={'/professor'} element={<Professor></Professor>}></Route>
       </Routes>
     </BrowserRouter>
   )
