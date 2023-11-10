@@ -2,7 +2,9 @@ import { makeObservable, observable, action } from "mobx";
 
 export class Store {
     constructor() {
-        this.user = {}
+        this.user = {
+            type: "professor"
+        }
         this.loading = false;
         makeObservable(this, {
             user: observable,
