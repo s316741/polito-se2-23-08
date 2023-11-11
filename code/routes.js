@@ -1,10 +1,15 @@
-const registerRoutes = (app) => {
-  // api health check
-  app.get("/", (req, res) => {
-    res.status(200).json({ msg: "health check passed! API is alive." });
-  });
+const {
+  getProposals
+} = require("./controllers/proposals.js");
+const express = require('express');
+const router = express.Router();
 
-  /* ADD STUFF HERE */
-};
+// api health check
+router.get("/", (req, res) => {
+  res.status(200).json({ msg: "health check passed! API is alive." });
+});
 
-module.exports = registerRoutes;
+/* ADD STUFF HERE */
+router.get("/thesisProposals", getProposals);
+
+module.exports = router;
