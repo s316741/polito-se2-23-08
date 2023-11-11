@@ -1,11 +1,7 @@
 import Navbar from "./Navbar";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { TagsInput } from "react-tag-input-component";
 import "../App.css";
-
-function handleSubmit(e) {
-  console.log("test:", "button works");
-}
 
 const KeyCodes = {
   comma: 188,
@@ -15,7 +11,54 @@ const KeyCodes = {
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 function InsertProposal() {
-  const [selected, setSelected] = React.useState([]);
+  const [selectedKeywords, setSelectedKeywords] = useState([]);
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    knowledge: "",
+    level: "Bachelor",
+    deadline: "",
+  });
+
+  const [combinedData, setCombinedData] = useState({
+    ...formData,
+    keywords: selectedKeywords,
+  });
+
+  useEffect(() => {
+    setCombinedData({
+      ...formData,
+      keywords: selectedKeywords,
+    });
+  }, [formData, selectedKeywords]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Check if any of the inputs are empty
+    if (
+      formData.title.trim() === "" ||
+      formData.description.trim() === "" ||
+      formData.knowledge.trim() === "" ||
+      formData.level.trim() === "" ||
+      formData.deadline.trim() === "" ||
+      selectedKeywords.length === 0
+    ) {
+      alert("Please fill in all the fields.");
+      return;
+    }
+    console.log("Form submitted!", combinedData);
+  };
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleTagsChange = (tags) => {
+    setSelectedKeywords(tags);
+  };
 
   return (
     <>
@@ -39,6 +82,8 @@ function InsertProposal() {
               id="title"
               name="title"
               placeholder="Enter proposal title"
+              value={formData.title}
+              onChange={handleInputChange}
             />
           </div>
           <div className="mb-3">
@@ -50,6 +95,8 @@ function InsertProposal() {
               id="description"
               name="description"
               placeholder="Enter proposal description"
+              value={formData.description}
+              onChange={handleInputChange}
               rows="4"
             ></textarea>
           </div>
@@ -64,6 +111,8 @@ function InsertProposal() {
               id="knowledge"
               name="knowledge"
               placeholder="Enter required knowledge"
+              value={formData.knowledge}
+              onChange={handleInputChange}
             />
           </div>
 
@@ -76,6 +125,8 @@ function InsertProposal() {
                 className="form-select border rounded px-3 py-2"
                 id="level"
                 name="level"
+                value={formData.level}
+                onChange={handleInputChange}
               >
                 <option value="Bachelor">Bachelor</option>
                 <option value="Master">Master</option>
@@ -128,6 +179,8 @@ function InsertProposal() {
                 className="form-control border rounded px-3 py-2"
                 id="deadline"
                 name="deadline"
+                value={formData.deadline}
+                onChange={handleInputChange}
               />
             </div>
           </div>
@@ -136,12 +189,12 @@ function InsertProposal() {
             <label htmlFor="keywords" className="form-label block">
               Keywords:
             </label>
-              <TagsInput
-                value={selected}
-                onChange={setSelected}
-                name="fruits"
-                placeHolder="enter fruits"
-              />
+            <TagsInput
+              value={selectedKeywords}
+              onChange={handleTagsChange}
+              name="fruits"
+              placeHolder="enter fruits"
+            />
           </div>
 
           <div className="d-flex justify-content-end mt-4">
