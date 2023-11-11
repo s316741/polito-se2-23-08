@@ -17,7 +17,7 @@ function Portal() {
             <Container className='my-5'>
                 <Row>
                     <Col>
-                        <Card style={{ width: '20rem' }}>
+                        <Card style={{ width: '20rem'}}>
                             <Card.Img variant="top" src="../../images/user-default.png" />
                             <Card.Body>
                                 <Card.Title>Name Surname</Card.Title>
