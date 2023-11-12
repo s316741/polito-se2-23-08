@@ -1,5 +1,6 @@
 import Navbar from "./Navbar";
 import React, { useState, useEffect } from "react";
+import Select from "react-select";
 import { TagsInput } from "react-tag-input-component";
 import "../App.css";
 
@@ -8,10 +9,38 @@ const KeyCodes = {
   enter: 13,
 };
 
+const levels = [
+  { value: "Bachelor", label: "Bachelor" },
+  { value: "Master", label: "Master" },
+  { value: "PhD", label: "PhD" },
+];
+
+const programs = [
+  { value: "CE", label: "CE" },
+  { value: "ME", label: "ME" },
+  { value: "BE", label: "BE" },
+];
+
+const groups = [
+  { value: "AI", label: "AI" },
+  { value: "SE", label: "SE" },
+  { value: "Network", label: "Network" },
+];
+
+const options = [
+  { value: "CE", label: "CE" },
+  { value: "ME", label: "ME" },
+  { value: "BE", label: "BE" },
+];
+
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 function InsertProposal() {
   const [selectedKeywords, setSelectedKeywords] = useState([]);
+  const [selectedLevel, setSelectedLevel] = useState("");
+  const [selectedProgram, setSelectedProgram] = useState("");
+  const [selectedGroups, setSelectedGroups] = useState("");
+  const [selectedType, setSelectedType] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -23,12 +52,20 @@ function InsertProposal() {
   const [combinedData, setCombinedData] = useState({
     ...formData,
     keywords: selectedKeywords,
+    level: selectedLevel.value,
+    group: selectedGroups.value,
+    program: selectedProgram.value,
+    type: selectedType.value,
   });
 
   useEffect(() => {
     setCombinedData({
       ...formData,
       keywords: selectedKeywords,
+      level: selectedLevel.value,
+      group: selectedGroups.value,
+      program: selectedProgram.value,
+      type: selectedType.value,
     });
   }, [formData, selectedKeywords]);
 
@@ -42,7 +79,11 @@ function InsertProposal() {
       formData.knowledge.trim() === "" ||
       formData.level.trim() === "" ||
       formData.deadline.trim() === "" ||
-      selectedKeywords.length === 0
+      selectedKeywords.length === 0 ||
+      selectedLevel.length === 0 ||
+      selectedGroups.length === 0 ||
+      selectedProgram.length === 0 ||
+      selectedType.length === 0
     ) {
       alert("Please fill in all the fields.");
       return;
@@ -121,28 +162,21 @@ function InsertProposal() {
               <label htmlFor="level" className="form-label block">
                 Level:
               </label>
-              <select
-                className="form-select border rounded px-3 py-2"
-                id="level"
-                name="level"
-                value={formData.level}
-                onChange={handleInputChange}
-              >
-                <option value="Bachelor">Bachelor</option>
-                <option value="Master">Master</option>
-                <option value="PhD">PhD</option>
-              </select>
+              <Select
+                defaultValue={selectedLevel}
+                onChange={setSelectedLevel}
+                options={levels}
+              />
             </div>
 
             <div className="col-md-4">
               <label htmlFor="programmes" className="form-label block">
                 CdS /programmes:
               </label>
-              <input
-                type="text"
-                className="form-control border rounded px-3 py-2"
-                id="programmes"
-                name="programmes"
+              <Select
+                defaultValue={selectedProgram}
+                onChange={setSelectedProgram}
+                options={programs}
               />
             </div>
 
@@ -150,11 +184,10 @@ function InsertProposal() {
               <label htmlFor="groups" className="form-label block">
                 Groups:
               </label>
-              <input
-                type="text"
-                className="form-control border rounded px-3 py-2"
-                id="groups"
-                name="groups"
+              <Select
+                defaultValue={selectedGroups}
+                onChange={setSelectedGroups}
+                options={groups}
               />
             </div>
 
@@ -162,11 +195,10 @@ function InsertProposal() {
               <label htmlFor="type" className="form-label block">
                 Type:
               </label>
-              <input
-                type="text"
-                className="form-control border rounded px-3 py-2"
-                id="type"
-                name="type"
+              <Select
+                defaultValue={selectedType}
+                onChange={setSelectedType}
+                options={options}
               />
             </div>
 
@@ -192,8 +224,8 @@ function InsertProposal() {
             <TagsInput
               value={selectedKeywords}
               onChange={handleTagsChange}
-              name="fruits"
-              placeHolder="enter fruits"
+              name="keywoards"
+              placeHolder="Enter keywoards"
             />
           </div>
 
